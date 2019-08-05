@@ -1,0 +1,35 @@
+{
+  "name": "ride-along",
+  "version": "1.0.0",
+  "description": "A Ride sharing app",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon bin/www",
+    "start": "node bin/www"
+  },
+  "keywords": [
+    "Nodejs",
+    "Express",
+    "Sequelize",
+    "PostgresQl"
+  ],
+  "author": "Alfred Chimereze Bryan",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1",
+    "passport": "^0.4.0",
+    "pg": "^7.12.0",
+    "pg-hstore": "^2.3.3",
+    "save-dev": "^2.0.0",
+    "sequelize": "^5.12.3",
+    "sequelize-cli": "^5.5.0"
+  }
+}
