@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon bin/www",
-    "start": "node bin/www"
+    "start": "node bin/www",
+    "migrate": "sequelize db:migrate"
   },
   "keywords": [
     "Nodejs",
