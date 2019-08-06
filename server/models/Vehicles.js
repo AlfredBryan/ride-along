@@ -7,37 +7,62 @@ const vehicle = (sequelize, DataTypes) => {
     },
     plate_number: {
       type: DataTypes.STRING,
-      allowNull: [false, "plate_number field cannot be empty"],
+      allowNull: false,
+      validate: {
+        isEmpty: false
+      }
+    },
+    manufacturer: {
+      type: DataTypes.STRING,
+      allowNull: false,
       validate: {
         isEmpty: false
       }
     },
     model: {
       type: DataTypes.STRING,
-      allowNull: [false, "model field cannot be empty"],
+      allowNull: false,
       validate: {
         isEmpty: false
       }
     },
     year: {
       type: DataTypes.STRING,
-      allowNull: [false, "year field cannot be empty"],
+      allowNull: false,
       validate: {
         isEmpty: false
       }
     },
     capacity: {
       type: DataTypes.STRING,
-      allowNull: [false, "capacity field cannot be empty"],
+      allowNull: false,
       validate: {
         isEmpty: false
       }
+    },
+    userId: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
     }
   });
 
   Vehicle.beforeCreate(vehicle => {
     vehicle.model = vehicle.model.toLowerCase();
+
+    return vehicle;
   });
+
+  Vehicle.associate = models => {
+    Vehicle.belongsTo(models.User, {
+      foreignKey: "userId"
+    });
+  };
+
+  sequelize.sync({ force: true }).then(() => {
+    console.log("Database & Table");
+  });
+
+  return Vehicle;
 };
 
-module.exports = vehicle;
+export default vehicle;

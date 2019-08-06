@@ -20,6 +20,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      manufacturer: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       model: {
         type: Sequelize.STRING,
         allowNull: false

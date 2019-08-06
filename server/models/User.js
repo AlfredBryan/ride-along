@@ -19,8 +19,7 @@ const user = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      isUnique: [true, "email already exists"],
-      allowNull: [false, "email field cannot be empty"],
+      allowNull: false,
       validate: {
         isEmail: true,
         notEmpty: true
@@ -28,7 +27,7 @@ const user = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: [false, "password field cannot be empty"],
+      allowNull: false,
       validate: {
         notEmpty: true
       }
@@ -39,7 +38,28 @@ const user = (sequelize, DataTypes) => {
     user.surname = user.surname.toLowerCase();
     user.first_name = user.firs_name.toLowerCase();
     user.email = user.email.toLowerCase();
+
+    return user;
   });
+
+  User.associate = models => {
+    User.belongsToMany(models.Trip, {
+      through: {
+        unique: false,
+        model: models.Booking
+      },
+      foreignKey: "userId"
+    });
+    User.hasMany(models.Vehicle, {
+      foreignKey: "userId"
+    });
+  };
+
+  sequelize.sync({ force: true }).then(() => {
+    console.log("Database & Table");
+  });
+
+  return User;
 };
 
-module.exports = user;
+export default user;
