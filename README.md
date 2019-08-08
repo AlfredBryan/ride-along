@@ -35,12 +35,9 @@ nodemon
 - [Expressjs](https://expressjs.com/en/starter/installing.html) - Dependency Management
 - [Sequelize](http://docs.sequelizejs.com/) - Dependency Management
 
-## Authors
+## Author
 
 Alfred Chimereze Bryan
-&
-
-Iyiola Jeremiah Osuagwu
 
 ## License
 

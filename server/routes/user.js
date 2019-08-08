@@ -86,30 +86,89 @@ router.post("/user/signup", async (req, res) => {
     res.send(errors);
   } else {
     // Check if user already exists
-    models.User.findOne({ where: { email: email } }).then(user => {
-      if (user) {
-        res.status(400).send({ message: "user already exists" });
-      } else {
-        models.User.create({ email: email, password: passwordHash }).then(
-          user => {
-            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-              expiresIn: 360000
-            });
-            res
-              .status(200)
-              .cookie("token", token)
-              .send({
-                authorized: true,
-                token: token,
-                user: user
+    models.User.findOne({ where: { email: email } })
+      .then(user => {
+        if (user) {
+          res.status(400).send({ message: "user already exists" });
+        } else {
+          models.User.create({ email: email, password: passwordHash }).then(
+            user => {
+              const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+                expiresIn: 360000
               });
-          }
-        );
-      }
-    });
+              res
+                .status(200)
+                .cookie("token", token)
+                .send({
+                  authorized: true,
+                  token: token,
+                  user: user
+                });
+            }
+          );
+        }
+      })
+      .catch(error => {
+        res.status(500).send("Error" + error);
+      });
   }
 });
 
+//User can login
+router.post("/user/login", (req, res) => {
+  const errors = [];
+  const { email, password } = req.body;
+
+  if (Validator.isEmpty(email)) {
+    errors.push({ message: "email field is required" });
+  }
+  if (!Validator.isEmpty(email)) {
+    if (!Validator.isEmail(email)) {
+      errors.push({ message: "email is invalid" });
+    }
+  }
+
+  if (Validator.isEmpty(password)) {
+    errors.push({ message: "email field is required" });
+  }
+
+  if (errors.length > 0) {
+    res.send(errors);
+  } else {
+    models.User.findOne({ where: { email: email } })
+      .then(user => {
+        if (!user) {
+          return res.status(404).send({ message: "user does not exist" });
+        }
+
+        const passwordIsValid = bcrypt.compareSync(password, user.password);
+        if (!passwordIsValid) {
+          return res.status(400).send({
+            authorized: false,
+            token: null,
+            message: "Invalid password"
+          });
+        }
+
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+          expiresIn: 360000
+        });
+        res
+          .status(200)
+          .cookie("token", token)
+          .send({
+            authorized: true,
+            token: token,
+            user: user
+          });
+      })
+      .catch(error => {
+        res.status(500).send("Error" + error);
+      });
+  }
+});
+
+//User can update profile
 router.put("/user/update/:id", upload, (req, res) => {
   const errors = [];
   const { surname, first_name, address } = req.body;
@@ -166,7 +225,7 @@ router.put("/user/update/:id", upload, (req, res) => {
       {
         surname: surname,
         first_name: first_name,
-        address: address,
+        address: address
         //image: req.file.secure_url
       },
       { where: { id: req.params.id } }
@@ -175,9 +234,26 @@ router.put("/user/update/:id", upload, (req, res) => {
         res.status(200).send(user);
       })
       .catch(error => {
-        res.status(400).send({ message: "unable to update user" });
+        res.status(400).send("Error" + error);
       });
   }
+});
+
+//User can view profile
+router.get("/user/:id", (req, res) => {
+  models.User.findOne({ where: { id: req.params.id } })
+    .then(user => {
+      if (!user) {
+        return res.status(404).send({ message: "user not found" });
+      }
+      res.status(200).send({
+        message: "success",
+        user: user
+      });
+    })
+    .catch(error => {
+      res.status(500).send("Error" + error);
+    });
 });
 
 module.exports = router;
