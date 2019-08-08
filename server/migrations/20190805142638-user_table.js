@@ -16,6 +16,10 @@ module.exports = {
         allowNull: false,
         autoIncrement: false
       },
+      is_admin: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false
+      },
       surname: {
         type: Sequelize.STRING,
         allowNull: true

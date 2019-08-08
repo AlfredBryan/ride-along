@@ -5,6 +5,16 @@ const user = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
+    is_admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+      set: function(value) {
+        if (value === "true") value = true;
+        if (value === "false") value = false;
+        this.setDataValue("hidden", value);
+      }
+    },
     surname: {
       type: DataTypes.STRING,
       allowNull: true
@@ -14,6 +24,10 @@ const user = (sequelize, DataTypes) => {
       allowNull: true
     },
     address: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    image: {
       type: DataTypes.STRING,
       allowNull: true
     },
@@ -34,14 +48,6 @@ const user = (sequelize, DataTypes) => {
     }
   });
 
-  User.beforeCreate(user => {
-    user.surname = user.surname.toLowerCase();
-    user.first_name = user.firs_name.toLowerCase();
-    user.email = user.email.toLowerCase();
-
-    return user;
-  });
-
   User.associate = models => {
     User.belongsToMany(models.Trip, {
       through: {
@@ -55,11 +61,8 @@ const user = (sequelize, DataTypes) => {
     });
   };
 
-  sequelize.sync({ force: true }).then(() => {
-    console.log("Database & Table");
-  });
 
   return User;
 };
 
-export default user;
+module.exports = user;

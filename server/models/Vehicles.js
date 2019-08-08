@@ -58,11 +58,7 @@ const vehicle = (sequelize, DataTypes) => {
     });
   };
 
-  sequelize.sync({ force: true }).then(() => {
-    console.log("Database & Table");
-  });
-
   return Vehicle;
 };
 
-export default vehicle;
+module.exports = vehicle;

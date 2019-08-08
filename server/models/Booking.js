@@ -53,11 +53,7 @@ const booking = (sequelize, DataTypes) => {
     });
   };
 
-  sequelize.sync({ force: true }).then(() => {
-    console.log("Database & Table");
-  });
-
   return Booking;
 };
 
-export default booking;
+module.exports = booking;

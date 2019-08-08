@@ -5,6 +5,8 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
 
+const userRouter = require("./routes/user")
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -12,6 +14,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger("dev"));
 app.use(cors());
 app.use(cookieParser());
+
+//Add routes
+app.use("/api/v1", userRouter);
 
 app.get("*", (req, res) => {
   res.status(200).send({
@@ -27,5 +32,4 @@ app.get(
   }
 );
 
-
-module.exports = app;
+module.exports = app
