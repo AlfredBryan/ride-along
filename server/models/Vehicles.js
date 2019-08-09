@@ -7,49 +7,28 @@ const vehicle = (sequelize, DataTypes) => {
     },
     plate_number: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmpty: false
-      }
+      allowNull: false
     },
     manufacturer: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmpty: false
-      }
+      allowNull: false
     },
     model: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmpty: false
-      }
+      allowNull: false
     },
     year: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmpty: false
-      }
+      allowNull: false
     },
     capacity: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmpty: false
-      }
+      allowNull: false
     },
     userId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4
     }
-  });
-
-  Vehicle.beforeCreate(vehicle => {
-    vehicle.model = vehicle.model.toLowerCase();
-
-    return vehicle;
   });
 
   Vehicle.associate = models => {

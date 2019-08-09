@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const userRouter = require("./routes/user");
+const rideRouter = require("./routes/vehicle")
 
 const app = express();
 
@@ -19,12 +20,13 @@ app.use(cookieParser());
 
 //Add routes
 app.use("/api/v1", userRouter);
+app.use("/api/v1", rideRouter);
 
-app.get("*", (req, res) => {
-  res.status(200).send({
-    message: "Welcome to Base route"
-  });
-});
+// app.get("*", (req, res) => {
+//   res.status(200).send({
+//     message: "Welcome to Base route"
+//   });
+// });
 
 // app.get(
 //   "/api/getuser",
@@ -34,7 +36,7 @@ app.get("*", (req, res) => {
 //   }
 // );
 
-app.get("/api/v1/validate", (req, res, next) => {
+app.get("/api/validate", (req, res, next) => {
   let token = req.headers["x-access-token"] || req.headers["authorization"];
   if (token.startsWith("Bearer")) {
     // Remove bearer from string

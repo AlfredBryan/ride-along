@@ -35,12 +35,6 @@ const trip = (sequelize, DataTypes) => {
     }
   });
 
-  Trip.beforeCreate(trip => {
-    trip.origin = trip.origin.toLowerCase();
-    trip.destination = trip.destination.toLowerCase();
-
-    return trip;
-  });
 
   Trip.associate = models => {
     Trip.belongsToMany(models.User, {
