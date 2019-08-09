@@ -59,6 +59,9 @@ const user = (sequelize, DataTypes) => {
     User.hasMany(models.Vehicle, {
       foreignKey: "userId"
     });
+    User.hasMany(models.Trip, {
+      foreignKey: "userId"
+    });
   };
 
 

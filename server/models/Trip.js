@@ -32,9 +32,12 @@ const trip = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true
       }
+    },
+    userId: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
     }
   });
-
 
   Trip.associate = models => {
     Trip.belongsToMany(models.User, {
@@ -43,6 +46,9 @@ const trip = (sequelize, DataTypes) => {
         model: models.Booking
       },
       foreignKey: "tripId"
+    });
+    Trip.belongsTo(models.User, {
+      foreignKey: "userId"
     });
   };
 
