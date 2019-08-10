@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const userRouter = require("./routes/user");
-const rideRouter = require("./routes/vehicle")
+const rideRouter = require("./routes/vehicle");
 
 const app = express();
 
@@ -28,13 +28,13 @@ app.use("/api/v1", rideRouter);
 //   });
 // });
 
-// app.get(
-//   "/api/getuser",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     res.send(req.user);
-//   }
-// );
+app.get(
+  "/api/v1/authenticate",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.send(req.user);
+  }
+);
 
 app.get("/api/validate", (req, res, next) => {
   let token = req.headers["x-access-token"] || req.headers["authorization"];

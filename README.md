@@ -39,6 +39,9 @@ nodemon
 
 Alfred Chimereze Bryan
 
+## Migrate DB on heroku
+heroku run sequelize db:migrate --env production -m --app production-app-name.
+
 ## License
 
 MIT
