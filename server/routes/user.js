@@ -40,7 +40,7 @@ router.get("/users", async (req, res) => {
     }
 
     return res.status(200).send({
-      status: "success",
+      success: true,
       data: users
     });
   } catch (error) {
@@ -102,7 +102,7 @@ router.post("/user/signup", async (req, res) => {
                 .send({
                   authorized: true,
                   token: token,
-                  user: user
+                  data: user
                 });
             }
           );
@@ -159,7 +159,7 @@ router.post("/user/login", (req, res) => {
           .send({
             authorized: true,
             token: token,
-            user: user
+            data: user
           });
       })
       .catch(error => {
@@ -248,7 +248,7 @@ router.get("/user/:id", (req, res) => {
       }
       res.status(200).send({
         message: "success",
-        user: user
+        data: user
       });
     })
     .catch(error => {

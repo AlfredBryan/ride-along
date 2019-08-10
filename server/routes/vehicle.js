@@ -18,7 +18,7 @@ router.get("/vehicles", (req, res) => {
       if (!rides) {
         return res.status(404).send({ message: "No rides found" });
       }
-      res.status(200).send({ success: true, rides: rides });
+      res.status(200).send({ success: true, data: rides });
     })
     .catch(error => {
       res.status(500).send("Error" + error);
@@ -76,7 +76,7 @@ router.post("/vehicles/add", (req, res) => {
 
         res.status(200).send({
           success: true,
-          ride: ride
+          data: ride
         });
       })
       .catch(error => {
@@ -95,7 +95,7 @@ router.get("/vehicle/:id", (req, res) => {
 
       res.status(200).send({
         success: true,
-        ride: ride
+        data: ride
       });
     })
     .catch(error => {
@@ -148,7 +148,7 @@ router.put("/vehicle/update/:id", (req, res) => {
 
         res.status(200).send({
           success: true,
-          ride: ride
+          data: ride
         });
       })
       .catch(error => {

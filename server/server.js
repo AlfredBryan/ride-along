@@ -9,6 +9,7 @@ require("dotenv").config();
 
 const userRouter = require("./routes/user");
 const rideRouter = require("./routes/vehicle");
+const tripRouter = require("./routes/trip");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 //Add routes
 app.use("/api/v1", userRouter);
 app.use("/api/v1", rideRouter);
+app.use("/api/v1", tripRouter);
 
 // app.get("*", (req, res) => {
 //   res.status(200).send({
