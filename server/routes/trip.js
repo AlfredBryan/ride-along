@@ -87,7 +87,7 @@ router.delete("/trip/remove/:id", (req, res) => {
       res.status(200).send({ success: true });
     })
     .catch(error => {
-      res.status(500).RTCDtmfSender("Error" + error);
+      res.status(500).Send("Error" + error);
     });
 });
 
